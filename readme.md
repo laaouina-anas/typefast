@@ -23,18 +23,28 @@ When you execute the program the word set will get updated by new ones, practice
 
 # Notes 
 
-This project could've been easily made in python or an easier language instead of C, yet I wanted
-to make this purely for learning.
+I made this project because I was learning C, I was reading K&R book, and simultaneously I suffered from touch typing inaccuracies, thus I decided to code this in pure C.
+
 As for practical developement purpouses, this project is not performance critical (even for 300k words)
 and i think python would have been an eaiser choice.
 
-# Challenges
+Also and this is important, this project has a lot of limitations, the words aren't random to my surprise, the algorithm I used is called "reservoir sampling" ,I used it unknowingly and intuitively because I had a question : How do I print N random english words on the screen ? the answer that screams itself it to store all the words, maybe suffle them and display first k words, yes I works yet it loads 300k words ~ 4MB words into memory for no reason.
 
-The main challenge that I faced in this program is the beloved Windows carriage return '\r'
-instead of being like normal people ( UNIX ) and adding a simple '\n' for newline, windows says nooo
-i'll add a newline and carriage return, why ? for no reason yet to disturb people like me.
-I am kidding, there is a reason .. It has to do with legacy software and backward compatibility.
+Originally I mistakenly used fseek thinking It'll make me go to the desired line, yet after a second look I quickly realised my error. 
 
-# Bugs
+So I end Googling (and seeing IA generated code), it simply said that there is no way to go to Kth line without traversing the (K-1)th lines before, lines are just a humanly imposed convention, machines in constract only know the \n or a sequence of bytes that mean add a new line, and the content of the file, whatever the file may be is just a stream of bytes.
 
-If you found a bug or room for further improvement, you are totally free ...
+So .. Still slow, I'll need to go to a random line each iteration, and for each iteration traverse the 300k words, so inefficient..
+
+Later in I had this idea : What If I can project myself inside the stream of bytes/characters, surely I'll be on a random line, yet anywhere inside, then just go to the begining, and pick up the word (alternatively pick the first word you encounter), Genius! Untill It isn't, although this is what I wanted, O(1) word retrieval, the words are no longer picked up randomly, using "reservoir sampling" statistically the longer words have more probability to be selected, the words are no longer selected "randomly" as I first intended, yet as longer words are better for practice, and I don't know how to even the distribution, I'll keep it as is .. just for now.
+
+
+# More challenges ...
+
+A challenge I faced is when I copied the .txt file containing all words, this file was made on windows so it had \r\n for newline instead of \n like on UNIX systems, this caused the script to crash, on a text editor (neovim in my case) it displayed a ^M symbol after each word .. only after researching I knew it was the carriage return.
+To adress this issue, a simple if statement was added .. Thank you Windows !
+
+
+# Conclusion
+
+Hey! you've been reading this or just took a look inside my repo, thank you so much... really appreciate it.
