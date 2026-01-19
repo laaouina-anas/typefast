@@ -45,7 +45,7 @@ int main(){
     int len = 0;
 
     //  I don't want to load the entire 300K, I will need the heap to store additional //
-    //  300K pointers, because i'll need to use the heap, otherwise the program will crash //
+    //  300K pointers, using the stack will make the program crash //
     //  with a segfault. //
     
     // first tell how many bytes are inside the file //
